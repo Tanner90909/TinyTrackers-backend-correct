@@ -20,6 +20,7 @@ fileConfig(config.config_file_name)
 # target_metadata = None
 
 from app.db.base import Base  # noqa
+from app.models.user import User, UserInDB
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
