@@ -15,6 +15,12 @@ class User(Base):
     is_superuser = Column(Boolean(), default=False)
     relationship()
 
+class UserChildren(Base):
+    __tablename__ = "userchildren"
+
+    id = Column(Integer, primary_key=True, index=True)
+     
+
     def to_schema(self):
         return UserInDB(
             id=self.id,
