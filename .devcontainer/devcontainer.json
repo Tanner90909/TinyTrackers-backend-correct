@@ -10,7 +10,6 @@
 
 	"onCreateCommand": "bash .devcontainer/onCreateCommand.sh",
 	"postStartCommand": "bash .devcontainer/postStartCommand.sh",
-	"forwardPorts": [5432],
 	"customizations": {
 		"vscode": {
 			"extensions": [
