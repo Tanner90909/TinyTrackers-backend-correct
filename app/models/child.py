@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Date, Column, Integer, String
+from sqlalchemy import Boolean, Date, Column, Integer, String, Mapped, List
 from sqlalchemy.orm import relationship
 from app.schemas import UserInDB
 
@@ -13,3 +13,5 @@ class Child(Base):
     allergies = Column(String)
     pediatrician_name = Column(String)
     pediatrician_number = Column(String)
+
+    events: Mapped[List["Event"]] = relationship(back_populates="child", cascade="all, delete-orphan")
