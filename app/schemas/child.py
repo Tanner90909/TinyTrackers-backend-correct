@@ -3,7 +3,7 @@ from sqlalchemy import Date
 
 from pydantic import BaseModel, EmailStr
 
-class ChildBase(BaseModel):
+class ChildBaseSchema(BaseModel):
     first_name: str
     last_name: str
     dob: Date
