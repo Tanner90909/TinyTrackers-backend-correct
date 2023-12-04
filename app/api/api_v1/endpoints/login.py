@@ -4,6 +4,7 @@ from typing import Any
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+import json
 
 from app import controllers, models, schemas
 from app.api import deps
@@ -49,7 +50,8 @@ def login_access_token(
 
     return {
         "access_token": token.access_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user_id": str(user.id)
     }
 
 
