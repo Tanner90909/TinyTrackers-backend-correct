@@ -9,6 +9,7 @@ class Child(Base):
     __tablename__ = "children"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    unique_child_id_code: Mapped[str] = Column(String, nullable=False)
     first_name: Mapped[str] = Column(String, nullable=False)
     last_name: Mapped[str] = Column(String, nullable=False)
     dob: Mapped[Date] = Column(Date, nullable=False)
@@ -17,3 +18,4 @@ class Child(Base):
     pediatrician_number: Mapped[str] = Column(String)
 
     events: Mapped[List["Event"]] = relationship(back_populates="child", cascade="all, delete-orphan")
+    child_users = relationship("UserChildren", back_populates="child")

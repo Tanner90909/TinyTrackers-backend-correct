@@ -16,6 +16,7 @@ class User(Base):
     is_superuser: Mapped[bool] = Column(Boolean(), default=False)
     
     events: Mapped[List["Event"]] = relationship(back_populates="author", cascade="all, delete-orphan")
+    user_children = relationship("UserChildren", back_populates="user")
 
 class UserChildren(Base):
     __tablename__ = "userchildren"
@@ -23,6 +24,9 @@ class UserChildren(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     child_id: Mapped[int] = mapped_column(ForeignKey("children.id"))
+
+    user = relationship("User", back_populates="user_children")
+    child = relationship("Child", back_populates="child_users")
      
 
     def to_schema(self):

@@ -10,3 +10,11 @@ class ChildBaseSchema(BaseModel):
     allergies: str
     pediatrician_name: str
     pediatrician_number: str
+
+class ChildCreateSchema(BaseModel):
+    first_name: str
+    last_name: str
+    dob: Date
+    allergies: str
+    pediatrician_name: str
+    pediatrician_number: str
