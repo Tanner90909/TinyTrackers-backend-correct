@@ -18,4 +18,4 @@ class Child(Base):
     pediatrician_number: Mapped[str] = Column(String)
 
     events: Mapped[List["Event"]] = relationship(back_populates="child", cascade="all, delete-orphan")
-    child_users = relationship("UserChildren", back_populates="child")
+    child_users: Mapped[List["UserChildren"]] = relationship("UserChildren", back_populates="child")
