@@ -1,13 +1,11 @@
 from typing import Optional
-from datetime import date
 
 from pydantic import BaseModel
 
 class ChildBaseSchema(BaseModel):
-    unique_child_id_code: str
     first_name: str
     last_name: str
-    dob: date
+    dob: str
     allergies: Optional[str]
     pediatrician_name: Optional[str]
     pediatrician_number: Optional[str]
@@ -15,12 +13,12 @@ class ChildBaseSchema(BaseModel):
 class ChildCreateSchema(ChildBaseSchema):
     first_name: str
     last_name: str
-    dob: date
+    dob: str
 
 class ChildUpdateSchema(ChildBaseSchema):
     first_name: str
     last_name: str
-    dob: date
+    dob: str
     allergies: str
     pediatrician_name: str
     pediatrician_number: str

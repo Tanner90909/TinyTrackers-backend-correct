@@ -5,15 +5,7 @@ from app.controllers.BaseController import BaseController
 
 class ChildController(BaseController[Child, ChildCreateSchema, ChildUpdateSchema]):
     def create_child(self, db: Session, child_in: ChildCreateSchema):
-        db_child = Child(
-            unique_child_id_code=child_in.unique_child_id_code,
-            first_name=child_in.first_name,
-            last_name=child_in.last_name,
-            dob= child_in.dob,
-            allergies=child_in.allergies,
-            pediatrician_name=child_in.pediatrician_name,
-            pediatrician_number=child_in.pediatrician_number
-        )
+        db_child = Child(**child_in.dict())
         db.add(db_child)
         db.commit()
         db.refresh(db_child)
