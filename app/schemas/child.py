@@ -11,9 +11,7 @@ class ChildBaseSchema(BaseModel):
     pediatrician_number: Optional[str]
 
 class ChildCreateSchema(ChildBaseSchema):
-    first_name: str
-    last_name: str
-    dob: str
+    pass
 
 class ChildUpdateSchema(ChildBaseSchema):
     first_name: str
