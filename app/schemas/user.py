@@ -37,3 +37,14 @@ class User(UserInDBBase):
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
     hashed_password: str
+
+
+class UserChildrenBaseSchema(BaseModel):
+    user_id: int
+    child_id: int
+
+class UserChildrenCreateSchema(UserChildrenBaseSchema):
+    pass
+
+class UserChildrenUpdateSchema(UserChildrenBaseSchema):
+    pass

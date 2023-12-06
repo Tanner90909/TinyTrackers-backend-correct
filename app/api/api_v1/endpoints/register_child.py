@@ -41,4 +41,7 @@ def register_child(*, db: Session = Depends(deps.get_db), parent_token: str = Fo
     child_in = schemas.ChildCreateSchema(first_name=child_first_name, last_name=child_last_name, dob=child_dob, allergies=child_allergies, pediatrician_name=child_pediatrician_name, pediatrician_number=child_pediatrician_phone_number)
     new_child = controllers.child.create(db, obj_in = child_in)
 
+    user_child_data = {"user_id": parent_user_id, "child_id": new_child.id}
+    controllers.user_children.create_user_child_relationship(db, user_child_data)
+
     return {"child_id": str(new_child.id), "message": "Child registered successfully"}
