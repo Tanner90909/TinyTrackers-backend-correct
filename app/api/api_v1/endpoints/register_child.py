@@ -61,7 +61,7 @@ def register_child(*,
 @router.post("/registerchildwithcode", response_model=schemas.ChildSchema)
 def register_child_with_code(*,
     db: Session = Depends(deps.get_db),
-    unique_child_code: str,
+    unique_child_code: Annotated[str, Form()],
     current_user: models.User = Depends(deps.get_current_active_user),
     ) -> Any:
     """
