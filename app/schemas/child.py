@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class ChildBaseSchema(BaseModel):
+    unique_child_code: str
     first_name: str
     last_name: str
     dob: str
@@ -11,9 +12,10 @@ class ChildBaseSchema(BaseModel):
     pediatrician_number: Optional[str]
 
 class ChildCreateSchema(ChildBaseSchema):
-    pass
+    unique_child_code: str
 
 class ChildUpdateSchema(ChildBaseSchema):
+    unique_child_code: str
     first_name: str
     last_name: str
     dob: str

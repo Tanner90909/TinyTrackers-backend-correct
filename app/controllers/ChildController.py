@@ -2,8 +2,13 @@ from sqlalchemy.orm import Session
 from app.models import Child, UserChildren
 from app.schemas.child import ChildCreateSchema, ChildUpdateSchema, ChildSchema
 from app.controllers.BaseController import BaseController
+import uuid
 
 class ChildController(BaseController[Child, ChildCreateSchema, ChildUpdateSchema]):
+    def generate_unique_child_id(self) -> str:
+        child_uuid = str(uuid.uuid4())
+        return child_uuid
+
     def create_child(self, db: Session, child_in: ChildCreateSchema):
         db_child = Child(**child_in.dict())
         db.add(db_child)

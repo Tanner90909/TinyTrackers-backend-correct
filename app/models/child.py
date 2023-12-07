@@ -10,6 +10,7 @@ class Child(Base):
     __tablename__ = "children"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    unique_child_code: Mapped[str] = Column(String, nullable=False)
     first_name: Mapped[str] = Column(String, nullable=False)
     last_name: Mapped[str] = Column(String, nullable=False)
     dob: Mapped[str] = Column(String, nullable=False)

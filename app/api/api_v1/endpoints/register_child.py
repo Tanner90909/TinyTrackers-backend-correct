@@ -87,32 +87,28 @@ router = APIRouter()
 
 @router.post("/registerchild", response_model=schemas.ChildSchema)
 def register_child(*,
-                   db: Session = Depends(deps.get_db),
-                #    parent_token: Annotated[str, Form()],
-                   child_first_name: Annotated[str, Form()],
-                   child_last_name: Annotated[str, Form()], 
-                   child_dob: Annotated[str, Form()], 
-                   child_allergies: Annotated[str, Form()],
-                   child_pediatrician_name: Annotated[str, Form()], 
-                   child_pediatrician_phone_number: Annotated[str, Form()],
-                   ) -> Any:
+            db: Session = Depends(deps.get_db),
+            child_first_name: Annotated[str, Form()],
+            child_last_name: Annotated[str, Form()], 
+            child_dob: Annotated[str, Form()], 
+            child_allergies: Annotated[str, Form()],
+            child_pediatrician_name: Annotated[str, Form()], 
+            child_pediatrician_phone_number: Annotated[str, Form()],
+            current_user: models.User = Depends(deps.get_current_active_user),
+            ) -> Any:
     """
     Create new child profile
     """
 
-    # parent_user_id = security.verify_token(parent_token)
-    # if not parent_user_id:
-    #     raise HTTPException(
-    #         status_code=401,
-    #         detail="Invalid or expired parent authentication token",
-    #     )
-
-    child_to_register = schemas.ChildCreateSchema(first_name=child_first_name, last_name=child_last_name, dob=child_dob, allergies=child_allergies, pediatrician_name=child_pediatrician_name, pediatrician_number=child_pediatrician_phone_number)
+    child_unique_code_to_register = controllers.child.generate_unique_child_id()
+    child_to_register = schemas.ChildCreateSchema(unique_child_code=child_unique_code_to_register, first_name=child_first_name, last_name=child_last_name, dob=child_dob, allergies=child_allergies, pediatrician_name=child_pediatrician_name, pediatrician_number=child_pediatrician_phone_number)
+    print(child_to_register)
     new_child = controllers.child.create(db, obj_in = child_to_register)
-    # user_child_data = {"user_id": parent_user_id, "child_id": new_child.id}
-    # controllers.user_children.create_user_child_relationship(db, user_child_data)
+    user_child_data = {"user_id": current_user.id, "child_id": new_child.id}
+    controllers.user_children.create_user_child_relationship(db, user_child_data)
     return {
         "id": str(new_child.id),
+        "unique_child_code": new_child.unique_child_code,
         "first_name": new_child.first_name,
         "last_name": new_child.last_name,
         "dob": new_child.dob,
