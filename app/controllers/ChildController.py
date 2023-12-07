@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.models import Child, UserChildren
 from app.schemas.child import ChildCreateSchema, ChildUpdateSchema, ChildSchema
 from app.controllers.BaseController import BaseController
+from typing import Optional
 import uuid
 
 class ChildController(BaseController[Child, ChildCreateSchema, ChildUpdateSchema]):
@@ -15,8 +16,11 @@ class ChildController(BaseController[Child, ChildCreateSchema, ChildUpdateSchema
         db.commit()
         db.refresh(db_child)
         return db_child
+    
+    def get_child_by_unique_code(self, db: Session, unique_child_code: str) -> Optional[Child]:
+        return db.query(self.model).filter(self.model.unique_child_code == unique_child_code).first()
 
-    def get_child_by_name_and_parent(self, db: Session, parent_user_id: str, child_first_name: str):
-        return db.query(Child).join(UserChildren, UserChildren.child_id == Child.id).filter(UserChildren.user_id == parent_user_id, Child.first_name == child_first_name).first()
+    # def get_child_by_name_and_parent(self, db: Session, parent_user_id: str, child_first_name: str):
+    #     return db.query(Child).join(UserChildren, UserChildren.child_id == Child.id).filter(UserChildren.user_id == parent_user_id, Child.first_name == child_first_name).first()
 
 child = ChildController(Child)
