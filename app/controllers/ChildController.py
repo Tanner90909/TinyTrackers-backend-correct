@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models import Child, UserChildren
+from app.models import Child, UserChildren, User
 from app.schemas.child import ChildCreateSchema, ChildUpdateSchema, ChildSchema
 from app.controllers.BaseController import BaseController
 from typing import Optional

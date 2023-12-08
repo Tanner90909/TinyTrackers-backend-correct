@@ -88,6 +88,25 @@ def register_child_with_code(*,
     }
 
 
+@router.get("/getchildren", response_model=List[schemas.ChildSchema])
+def get_children_for_user(
+    *,
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_active_user),
+    ) -> Any:
+    """
+    Get all children for an authenticated user
+    """
+
+    # get the ids of the children we want to get
+    current_user_id = current_user.id
+    # children_to_get_ids = controllers.user_children.get_children_from_pivot(db, current_user_id)
+    children_data = controllers.user_children.get_children_data(db, current_user_id=current_user_id)
+    print(children_data)
+    
+    return children_data
+
+
 
 
 # @router.post("/registerchild", response_model=schemas.ChildSchema)

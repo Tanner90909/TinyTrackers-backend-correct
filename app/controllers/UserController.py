@@ -6,6 +6,7 @@ from app.core.security import get_password_hash, verify_password
 from app.controllers.BaseController import BaseController
 from app.models.user import User, UserChildren
 from app.schemas.user import UserCreate, UserUpdate, UserChildrenCreateSchema, UserChildrenUpdateSchema
+from app.models.child import Child
 
 
 class UserController(BaseController[User, UserCreate, UserUpdate]):
@@ -62,5 +63,14 @@ class UserChildrenController(BaseController[UserChildren, UserChildrenCreateSche
         db.commit()
         db.refresh(db_user_child)
         return db_user_child
+    
+    def get_children_from_pivot(self, db: Session, current_user_id: int):
+        return db.query(UserChildren).filter(UserChildren.user_id == current_user_id).all()
+    
+    def get_children_data(self, db: Session, current_user_id: int):
+        return (db.query(Child)
+                .join(Child.child_users)
+                .filter(UserChildren.user_id == current_user_id)
+                .all())
     
 user_children = UserChildrenController(UserChildren)
