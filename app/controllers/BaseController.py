@@ -25,6 +25,11 @@ class BaseController(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def get(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
+    
+    def get_user_id(self, db: Session, current_user_id: Any) -> Optional[ModelType]:
+        return db.query(self.model).filter(
+            self.model.id == current_user_id
+        ).first()
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100

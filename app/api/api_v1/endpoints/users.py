@@ -1,4 +1,5 @@
 from typing import Any, List, Annotated
+import json
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Form
 from fastapi.encoders import jsonable_encoder
@@ -126,10 +127,6 @@ def read_user_by_id(
     user = controllers.user.get(db, id=user_id)
     if user == current_user:
         return user
-    if not controllers.user.is_superuser(current_user):
-        raise HTTPException(
-            status_code=400, detail="The user doesn't have enough privileges"
-        )
     return user
 
 
@@ -188,5 +185,6 @@ def register_user(*, db: Session = Depends(deps.get_db),
 
     return {
         "access_token": token.access_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user_id": str(new_user.id)
     }

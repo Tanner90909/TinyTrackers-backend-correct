@@ -27,8 +27,8 @@ RUN PGDATA="${PGDATA//\/workspace/$HOME}" \
 # Switch back to the root user
 USER root
 ENV PATH="$HOME/.pg_ctl/bin:$PATH"
-ENV DATABASE_URL="postgresql://gitpod@localhost"
-ENV PGHOSTADDR="127.0.0.1"
+ENV DATABASE_URL="postgresql://postgres@localhost"
+ENV PGHOSTADDR=""
 ENV PGDATABASE="postgres"
 # Switch to the user gitpod and copy a script
 # USER gitpod
