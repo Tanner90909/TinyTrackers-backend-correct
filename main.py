@@ -13,7 +13,8 @@ app = FastAPI(
 # Set all CORS enabled origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*, https://tinytrackers.vercel.app/, http://tinytrackers.vercel.app/, tinytrackers.vercel.app/"],  # Allows all origins
+    allow_origins=["*"],
+    # allow_origins=["*, https://tinytrackers.vercel.app/, http://tinytrackers.vercel.app/, tinytrackers.vercel.app/"],  # Allows all origins
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
